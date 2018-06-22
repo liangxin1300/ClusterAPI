@@ -5,7 +5,12 @@ from cluster import Cluster
 from node import Node
 from corosync import Corosync
 
+import logging
+
 app = Flask(__name__)
+log = logging.getLogger('werkzeug')
+log.disabled = True
+app.logger.disabled = True
 api = Api(app)
 
 class Root(Resource):
@@ -19,4 +24,4 @@ api.add_resource(Corosync, '/corosync')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')
