@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from string import Template
 
 parser = reqparse.RequestParser()
 parser.add_argument('port')
@@ -11,7 +12,13 @@ class Corosync(Resource):
 
     def post(self):
         args = parser.parse_args()
-        #print({'port': args['port']})
-        #print({'bindnetaddr': args['bindnetaddr']})
-        #print({'mcastaddr': args['mcastaddr']})
+        with open('config/corosync.conf.template', 'r') as f:
+            s = Template(f.read())
+            data = s.substitute(bindnetaddr = args['bindnetaddr'],
+                                mcastaddr = args['mcastaddr'],
+                                port = args['port'],
+                                expected_votes = 1,
+                                two_node = 0)
+        with open('corosync.conf', 'w') as f:
+            f.write(data)
         return '', 201
