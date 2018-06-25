@@ -20,8 +20,8 @@ class Root(Resource):
 api.add_resource(Root, '/')
 api.add_resource(Cluster, '/cluster')
 api.add_resource(Node, '/node/<node_id>', '/node')
-api.add_resource(Corosync, '/corosync')
+api.add_resource(Corosync, '/corosync/<path>')
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')

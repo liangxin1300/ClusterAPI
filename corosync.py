@@ -1,3 +1,4 @@
+from flask import send_from_directory
 from flask_restful import Resource, reqparse
 from string import Template
 
@@ -9,6 +10,9 @@ parser.add_argument('mcastaddr')
 
 
 class Corosync(Resource):
+
+    def get(self, path):
+        return send_from_directory("/etc/corosync", path)
 
     def post(self):
         args = parser.parse_args()
