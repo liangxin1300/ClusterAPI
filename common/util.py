@@ -4,7 +4,13 @@ import xmltodict
 import functools
 import os
 
+import pam
+import jwt
+
 from flask_restful import abort
+
+
+TOKEN_KEY = 'ClusterAPI'
 
 
 def xml_to_json(xml_data):
@@ -75,8 +81,20 @@ def get_cib_data(scope=None):
 def check_login(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+        if func.__name__ == "register":
+            return func(*args, **kwargs)
         root = '/'.join(os.path.dirname(__file__).split('/')[:-1])
-        if not os.path.exists("root/api_token_entries.store"):
+        if not os.path.exists("%s/api_token_entries.store" % root):
             abort(401)
         return func(*args, **kwargs)
     return wrapper
+
+
+def check_pam(username, password):
+    p = pam.pam()
+    return p.authenticate(username, password)
+
+
+def create_token(username):
+    token = jwt.encode({'username': username, 'expiration': 'one year'}, TOKEN_KEY)
+    return to_ascii(token)
