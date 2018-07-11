@@ -1,6 +1,10 @@
 import subprocess
 import json
 import xmltodict
+import functools
+import os
+
+from flask_restful import abort
 
 
 def xml_to_json(xml_data):
@@ -58,8 +62,21 @@ def get_cib_data_raw(scope=None):
 
 
 def get_cib_data(scope=None):
-    def inner(fn):
-        g = fn.__globals__
-        g['cib_data'] = xml_to_json(get_cib_data_raw(scope))
-        return fn
-    return inner
+    def decorator(func):
+        def inner(*args, **kwargs):
+            g['cib_data'] = xml_to_json(get_cib_data_raw(scope))
+            return func(*args, **kwargs)
+
+        g = func.__globals__
+        return inner
+    return decorator
+
+
+def check_login(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        root = '/'.join(os.path.dirname(__file__).split('/')[:-1])
+        if not os.path.exists("root/api_token_entries.store"):
+            abort(401)
+        return func(*args, **kwargs)
+    return wrapper

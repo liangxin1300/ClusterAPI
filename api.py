@@ -4,10 +4,11 @@ from flask_restful import Api
 from resources.cluster import Cluster
 from resources.node import Node
 from resources.resource import Resource
+from common.util import check_login
 
 
 app = Flask(__name__)
-api = Api(app, prefix="/api/v1")
+api = Api(app, prefix="/api/v1", decorators=[check_login])
 
 api.add_resource(Cluster, '/cluster')
 api.add_resource(Node, '/nodes', '/nodes/<node_id>')
