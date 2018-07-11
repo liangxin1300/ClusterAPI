@@ -7,6 +7,7 @@ import os
 import pam
 import jwt
 
+from flask import request
 from flask_restful import abort
 
 
@@ -84,7 +85,19 @@ def check_login(func):
         if func.__name__ == "register":
             return func(*args, **kwargs)
         root = '/'.join(os.path.dirname(__file__).split('/')[:-1])
-        if not os.path.exists("%s/api_token_entries.store" % root):
+        token_path = "%s/api_token_entries.store" % root
+        if not os.path.exists(token_path):
+            abort(401)
+        with open(token_path, 'r') as f:
+            data = json.loads(f.read())
+            token_orig = data["token"]
+        token_from_request = request.headers.get("Authenticate")
+        if token_from_request and \
+           token_from_request.startswith("Token "):
+            token_from_request = token_from_request[6:]
+            if token_from_request != token_orig:
+                abort(401)
+        else:
             abort(401)
         return func(*args, **kwargs)
     return wrapper
