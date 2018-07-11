@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_restful import Api
 
-from resources.demo import HelloWorld
 from resources.cluster import Cluster
 from resources.node import Node
 from resources.resource import Resource
@@ -10,7 +9,6 @@ from resources.resource import Resource
 app = Flask(__name__)
 api = Api(app, prefix="/api/v1")
 
-api.add_resource(HelloWorld, '/')
 api.add_resource(Cluster, '/cluster')
 api.add_resource(Node, '/nodes', '/nodes/<node_id>')
 api.add_resource(Resource, '/resources')
