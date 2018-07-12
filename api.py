@@ -1,22 +1,25 @@
+
 from flask import Flask
-from flask_restful import Api, reqparse
-
-from resources.cluster import Cluster
-from resources.node import Node
-from resources.resource import Resource
-from resources.register import Register
-from common.util import check_login
 
 
-app = Flask(__name__)
-api = Api(app, prefix="/api/v1", decorators=[check_login])
+def create_app():
+    app = Flask(__name__)
+    app.config.from_mapping(
+        SECRET_KEY = 'dev',
+        URL_PREFIX = '/api/v1'
+    )
 
-parser = reqparse.RequestParser()
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
 
-api.add_resource(Register, '/register', resource_class_args=(parser,))
-api.add_resource(Cluster, '/cluster')
-api.add_resource(Node, '/nodes', '/nodes/<node_id>')
-api.add_resource(Resource, '/resources')
+    from resources import cluster
+    app.register_blueprint(cluster.bp,
+                           url_prefix=app.config['URL_PREFIX'])
+
+    return app
+
 
 if __name__ == "__main__":
+    app = create_app()
     app.run(debug=True, host='0.0.0.0')
