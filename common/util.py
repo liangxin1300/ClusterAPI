@@ -80,14 +80,22 @@ def get_cib_data(scope=None):
 
 
 def check_login(func):
+    '''
+    This decorator added before each method, except register
+    1. Check whether token file exists
+    2. Compare tokens in token file and in headers
+    3. TODO: Compare date expiration
+    '''
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         if func.__name__ == "register":
             return func(*args, **kwargs)
+
         root = '/'.join(os.path.dirname(__file__).split('/')[:-1])
         token_path = "%s/api_token_entries.store" % root
         if not os.path.exists(token_path):
             abort(401)
+
         with open(token_path, 'r') as f:
             data = json.loads(f.read())
             token_orig = data["token"]
@@ -99,6 +107,7 @@ def check_login(func):
                 abort(401)
         else:
             abort(401)
+
         return func(*args, **kwargs)
     return wrapper
 
