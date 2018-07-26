@@ -25,4 +25,4 @@ class RegisterUser(MethodView):
 registration_view = RegisterUser.as_view('register')
 
 # Add rules for the api Endpoints
-auth.add_url_rule('/auth/register', view_func=registration_view, methods=['POST'])
+auth.add_url_rule('/auth/register', view_func=registration_view)

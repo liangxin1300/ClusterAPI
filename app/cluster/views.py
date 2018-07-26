@@ -20,4 +20,4 @@ class Cluster(MethodView):
 # Cluster class as view
 cluster_view = Cluster.as_view('cluster')
 # Add rule for the api Endpoints
-cluster.add_url_rule('/cluster', view_func=cluster_view, methods=['GET', 'POST'])
+cluster.add_url_rule('/cluster', view_func=cluster_view)

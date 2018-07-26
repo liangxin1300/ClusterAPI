@@ -15,4 +15,4 @@ class CorosyncConf(MethodView):
 
 
 conf_view = CorosyncConf.as_view('corosync')
-corosync.add_url_rule('/corosync/conf', view_func=conf_view, methods=['GET', 'POST'])
+corosync.add_url_rule('/corosync/conf', view_func=conf_view)
