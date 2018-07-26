@@ -1,5 +1,5 @@
 
-from app import app
+from clusterAPI import api
 
 if __name__ == '__main__':
-    app.run(host=app.config['HOST'])
+    api.run(host=api.config['HOST'])

@@ -1,8 +1,8 @@
 
 from flask import Blueprint, make_response
 from flask.views import MethodView
-from app.common.helper import get_cib_data
-from app.auth.helper import token_required
+from clusterAPI.common.helper import get_cib_data
+from clusterAPI.auth.helper import token_required
 
 cluster = Blueprint('cluster', __name__)
 

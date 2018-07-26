@@ -1,6 +1,6 @@
 from flask import Blueprint, make_response
 from flask.views import MethodView
-from app.auth.helper import token_required
+from clusterAPI.auth.helper import token_required
 #test
 corosync = Blueprint('corosync', __name__)
 

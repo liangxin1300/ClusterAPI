@@ -4,7 +4,7 @@ import json
 import xmltodict
 from functools import wraps
 from flask import make_response, jsonify
-from app import app
+from clusterAPI import api
 
 
 def xml_to_json(xml_data):
@@ -47,7 +47,7 @@ def get_stdout_stderr(cmd, input_s=None, shell=True):
 
 def get_cib_data_raw(scope=None):
     get_cib_cmd = "%s %s" % \
-                  (app.config['CIB_CMD'], app.config['CIB_CMD_OPTIONS'])
+                  (api.config['CIB_CMD'], api.config['CIB_CMD_OPTIONS'])
     if scope:
         get_cib_cmd += " -o %s" % scope
     ret, out, err = get_stdout_stderr(get_cib_cmd)

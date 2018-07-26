@@ -1,8 +1,8 @@
 
 from flask import Blueprint, request
 from flask.views import MethodView
-from app.auth.helper import check_pam, create_token
-from app.common.helper import response, response_auth
+from clusterAPI.auth.helper import check_pam, create_token
+from clusterAPI.common.helper import response, response_auth
 
 auth = Blueprint('auth', __name__)
 

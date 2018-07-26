@@ -5,14 +5,14 @@ import datetime
 
 from flask import request, make_response, jsonify
 from functools import wraps
-from app import app
-from app.common.helper import response
+from clusterAPI import api
+from clusterAPI.common.helper import response
 
 
 def create_token(username):
     exp = datetime.datetime.utcnow() + \
-          datetime.timedelta(days=app.config.get('AUTH_TOKEN_EXPIRY_DAYS'),
-                             seconds=app.config.get('AUTH_TOKEN_EXPIRY_SECONDS'))
+          datetime.timedelta(days=api.config.get('AUTH_TOKEN_EXPIRY_DAYS'),
+                             seconds=api.config.get('AUTH_TOKEN_EXPIRY_SECONDS'))
     token_data = {
         'exp' : exp,
         'user': username
@@ -20,7 +20,7 @@ def create_token(username):
     
     try:
         return jwt.encode(token_data, 
-                          app.config['SECRET_KEY'],
+                          api.config['SECRET_KEY'],
                           algorithm='HS256')
     except Exception as e:
         return e
@@ -28,7 +28,7 @@ def create_token(username):
 
 def decode_token(token):
     try:
-        token_data = jwt.decode(token, app.config['SECRET_KEY'], algorithms='HS256')
+        token_data = jwt.decode(token, api.config['SECRET_KEY'], algorithms='HS256')
         return token_data['user'], True
     except jwt.ExpiredSignatureError:
         return 'Signature expired, Please sign in again', False
