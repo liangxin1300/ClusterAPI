@@ -3,4 +3,8 @@
 from clusterAPI import api
 
 if __name__ == '__main__':
-    api.run(host=api.config['HOST'])
+    try:
+        api.run(host=api.config['HOST'])
+    except:
+        import sys
+        sys.exit(1)
