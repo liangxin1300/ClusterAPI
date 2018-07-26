@@ -2,9 +2,10 @@
 
 from setuptools import setup, find_packages
 
-setup(name='ClusterAPIServer',
-      version='0.3',
+setup(name='ClusterAPI',
+      version='0.4',
       author='Xin Liang',
       author_email='XLiang@suse.com',
       packages=find_packages(),
+      scripts=['bin/clusterAPIServer'],
       install_requires=['Flask', 'xmltodict', 'PyJWT', 'python-pam'])
