@@ -22,3 +22,6 @@ app.register_blueprint(cluster, url_prefix=root_url)
 
 from app.node.views import node
 app.register_blueprint(node, url_prefix=root_url)
+
+from app.corosync.views import corosync
+app.register_blueprint(corosync, url_prefix=root_url)
