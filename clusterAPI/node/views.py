@@ -10,6 +10,13 @@ class Cluster(MethodView):
     @token_required
     @get_cib_data("nodes")
     def get(self):
+        """
+        Get nodes status
+        ---
+        responses:
+          200:        
+            description: nodes status
+        """
         return make_response(cib_data)
 
     def post(self):

@@ -11,6 +11,13 @@ class Cluster(MethodView):
     @token_required
     @get_cib_data("crm_config")
     def get(self):
+        """
+        Get cluster status
+        ---
+        responses:
+          200:        
+            description: cluster status
+        """
         return make_response(cib_data)
 
     def post(self):

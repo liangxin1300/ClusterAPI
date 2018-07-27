@@ -25,3 +25,6 @@ api.register_blueprint(node, url_prefix=root_url)
 
 from clusterAPI.corosync.views import corosync
 api.register_blueprint(corosync, url_prefix=root_url)
+
+from clusterAPI.docs.views import docs
+api.register_blueprint(docs, url_prefix=root_url)

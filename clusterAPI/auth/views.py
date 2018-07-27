@@ -10,6 +10,16 @@ auth = Blueprint('auth', __name__)
 class RegisterUser(MethodView):
 
     def post(self):
+        """
+        Register user to cluster
+        ---
+        parameters:
+          - username: username
+          - password: password
+        responses:
+          201:        
+            description: token created
+        """
         post_data = request.get_json() or request.form
         username = post_data.get('username')
         password = post_data.get('password')
