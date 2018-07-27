@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ClusterAPI',
-      version='0.4',
+      version='0.5.1',
       author='Xin Liang',
       author_email='XLiang@suse.com',
       packages=find_packages(),
