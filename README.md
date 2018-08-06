@@ -6,12 +6,17 @@ Install and configure HA cluster firstly,
 Then
 ```
 pip3 install -r requirements.txt
-python3 api.py
+python3 run.py
+```
+
+## Doc
+```
+curl http://server:5000/api/v1/
 ```
 
 ## Register
 ```
-curl http://server:5000/api/v1/register -d "username=name&password=xxxx" -X POST
+curl http://server:5000/api/v1/auth/register -d "username=name&password=xxxx" -X POST
 ```
 
 ## Cluster api
